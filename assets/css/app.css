@@ -3,3 +3,19 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+
+body {
+  @apply text-gray-800;
+}
+
+a[href] {
+  @apply text-purple-500 transition-colors duration-300;
+}
+
+a[href]:hover {
+  @apply text-purple-700;
+}
+
+a.icon {
+  @apply text-purple-300;
+}

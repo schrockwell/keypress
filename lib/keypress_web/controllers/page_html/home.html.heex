@@ -1,1 +1,3 @@
-hello, world
+<%= for post <- @posts do %>
+    <Theme.post_preview theme={@theme} post={post} />
+<%= end %>

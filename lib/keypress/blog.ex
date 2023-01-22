@@ -7,7 +7,7 @@ defmodule Keypress.Blog do
 
   def get_published_post_by_number!(number) do
     Post
-    |> where([p], p.published_at)
+    |> where([p], not is_nil(p.published_at))
     |> where([p], p.number == ^number)
     |> Repo.one!()
   end
@@ -17,8 +17,9 @@ defmodule Keypress.Blog do
 
     Post
     |> limit(^limit)
-    |> where([p], p.published_at)
+    |> where([p], not is_nil(p.published_at))
     |> order_by([p], desc: p.published_at)
+    |> Repo.all()
   end
 
   def change_post(%Post{} = post, params \\ %{}) do

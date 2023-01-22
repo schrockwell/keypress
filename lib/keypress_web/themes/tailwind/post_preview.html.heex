@@ -1,0 +1,36 @@
+<div class="mb-32 flex items-start space-x-8">
+  <a href={~p"/p/#{@post.number}"} class="icon">
+    <.post_icon post={@post} class="h-10 w-10" />
+  </a>
+
+  <div class="flex-grow">
+    <%= if post_title(@post) do %>
+      <div class="text-2xl mb-4">
+        <%= if @post.url do %>
+          <a href={@post.url}><%= post_title(@post) %></a>
+        <% else %>
+          <%= post_title(@post) %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= if @post.body do %>
+      <%= if post_type(@post) == :short do %>
+        <div class="text-2xl">
+          <%= @post.body %>
+        </div>
+      <% else %>
+        <div class="">
+          <%= @post.body %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <div class="text-gray-400 flex justify-between mt-4">
+      <%= date(@post.published_at) %>
+      <%= if @post.updated_at do %>
+        • Updated <%= date(@post.updated_at) %>
+      <% end %>
+    </div>
+  </div>
+</div>

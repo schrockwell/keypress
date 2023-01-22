@@ -88,6 +88,9 @@ defmodule KeypressWeb do
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
+      alias KeypressWeb.Theme
+      import KeypressWeb.HTML
+
       # Routes generation with the ~p sigil
       unquote(verified_routes())
     end
