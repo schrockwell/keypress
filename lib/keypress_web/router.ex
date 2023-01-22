@@ -8,6 +8,7 @@ defmodule KeypressWeb.Router do
     plug :put_root_layout, {KeypressWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug KeypressWeb.ThemePlug
   end
 
   pipeline :author do
