@@ -10,18 +10,22 @@ defmodule KeypressWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  pipeline :author do
+    plug :author_basic_auth
   end
 
   scope "/", KeypressWeb do
     pipe_through :browser
-
     get "/", PageController, :home
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", KeypressWeb do
-  #   pipe_through :api
-  # end
+  scope "/write/", KeypressWeb do
+    pipe_through [:browser, :author]
+  end
+
+  defp author_basic_auth(conn, _opts) do
+    username = ""
+    password = System.fetch_env!("AUTHOR_PASSWORD")
+    Plug.BasicAuth.basic_auth(conn, username: username, password: password)
+  end
 end
