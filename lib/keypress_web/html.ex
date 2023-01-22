@@ -3,6 +3,16 @@ defmodule KeypressWeb.HTML do
 
   alias Keypress.Schemas.Post
 
+  def copyright_years do
+    year = DateTime.utc_now().year
+
+    if year == 2023 do
+      "2023"
+    else
+      "2023–#{year}"
+    end
+  end
+
   def post_title(%Post{} = post) do
     cond do
       post.title -> post.title
