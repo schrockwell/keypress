@@ -1,0 +1,8 @@
+<%= for post <- @posts do %>
+  <div class="mb-4 flex space-x-4">
+    <.post_icon post={post} class="w-6 h-6" />
+    <.link href={~p"/#{post.number}"}>
+      <%= post_title(post) || "(no title)" %>
+    </.link>
+  </div>
+<% end %>

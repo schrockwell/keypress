@@ -18,7 +18,7 @@ defmodule Keypress.Blog do
     Post
     |> limit(^limit)
     |> where([p], not is_nil(p.published_at))
-    |> order_by([p], desc: p.published_at)
+    |> order_by([p], desc: p.number)
     |> Repo.all()
   end
 
