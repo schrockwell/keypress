@@ -15,14 +15,16 @@ defmodule KeypressWeb.Router do
     plug :author_basic_auth
   end
 
+  scope "/write", KeypressWeb.Write do
+    pipe_through [:browser, :author]
+
+    resources "/", PostController
+  end
+
   scope "/", KeypressWeb do
     pipe_through :browser
     get "/", PageController, :home
     get "/:number", PostController, :show
-  end
-
-  scope "/write/", KeypressWeb do
-    pipe_through [:browser, :author]
   end
 
   defp author_basic_auth(conn, _opts) do

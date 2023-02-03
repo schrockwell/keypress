@@ -1,0 +1,46 @@
+<%= if @post.id do %>
+  <div class="flex items-center gap-x-4">
+    <div class="text-xl">Editing post</div>
+  </div>
+<% end %>
+<.simple_form :let={f} for={@changeset} class="mb-8 pb-8 border-b">
+  <!-- Why do I need this???? -->
+  <.input type="hidden" id="_csrf_token" errors={[]} name="_csrf_token" value={Plug.CSRFProtection.get_csrf_token()} />
+
+  <.input field={{f, :body}} type="textarea" label="Content" rows="6" />
+  <.input field={{f, :title}} label="Title" />
+  <.input field={{f, :url}} label="Link" placeholder="http://example.com" />
+
+  <:actions>
+    <%= if @post.published_at do %>
+      <.button name="action" value="save-and-publish">Save and Publish</.button>
+    <% else %>
+      <div class="flex gap-x-4">
+        <.button name="action" value="save-and-publish">Save and Publish</.button>
+        <.button
+          name="action"
+          value="save-draft"
+          class="border bg-inherit text-inherit hover:bg-gray-100 hover:text-inherit"
+        >
+          Save Draft
+        </.button>
+      </div>
+    <% end %>
+    <%= if @post.id do %>
+      <.link
+        navigate={~p"/write"}
+        class="rounded-full hover:bg-gray-100 px-3 py-1 transition-colors text-sm font-semibold"
+        data-confirm="Abandon changes?"
+      >
+        Cancel
+      </.link>
+    <% end %>
+  </:actions>
+</.simple_form>
+
+<h2 class="text-xl mb-2">Drafts</h2>
+<%= for post <- @drafts do %>
+  <div class="flex items-start justify-between">
+    <.link navigate={~p"/write/#{post.id}"}><%= post.number || "0" %>. <%= post_title(post) %></.link>
+  </div>
+<% end %>
