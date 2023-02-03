@@ -20,7 +20,7 @@ defmodule KeypressWeb.TailwindTheme do
 
   def post_body(assigns) do
     ~H"""
-    <%= raw(Earmark.as_html!(@post.body)) %>
+    <%= raw(Earmark.as_html!(@post.body, %Earmark.Options{code_class_prefix: "language-"})) %>
     """
   end
 end

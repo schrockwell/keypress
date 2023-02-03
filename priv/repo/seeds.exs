@@ -35,7 +35,25 @@
     %Keypress.Schemas.Post{},
     %{
       title: "Some long",
-      body: "lorem ipsum dolor sit amet\n\nnew paragraph\n\n## header 2\n\nSome *bold* _italic_ text"
+      body: """
+      lorem ipsum dolor sit amet
+
+      new paragraph
+
+      ## header 2
+
+      Some **bold** _italic_ text
+
+      and a [link](https://example.com)
+
+      and maybe some `code`
+
+      ```elixir
+      def foo(bar) do
+        :baz
+      end
+      ```
+      """
     },
     publish: true
   )
