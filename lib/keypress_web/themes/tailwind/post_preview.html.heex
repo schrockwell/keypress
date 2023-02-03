@@ -1,13 +1,13 @@
 <div class="mb-32 flex items-start space-x-8">
-  <a href={~p"/#{@post.number}"} class="icon">
-    <.post_icon post={@post} class="h-10 w-10" />
-  </a>
+  <.link navigate={~p"/#{@post.number}"} class="group text-purple-300 hover:text-purple-700 transition-all duration-300">
+    <.post_icon post={@post} class="h-10 w-10 group-hover:-translate-y-1 duration-300" />
+  </.link>
 
   <div class="flex-grow">
     <%= if post_title(@post) do %>
-      <div class="text-2xl mb-4">
+      <div class="text-2xl mb-4 flex">
         <%= if @post.url do %>
-          <a href={@post.url}><%= post_title(@post) %></a>
+          <.a href={@post.url}><%= post_title(@post) %></.a>
         <% else %>
           <%= post_title(@post) %>
         <% end %>
