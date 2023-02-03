@@ -18,7 +18,6 @@ defmodule KeypressWeb.Router do
   scope "/", KeypressWeb do
     pipe_through :browser
     get "/", PageController, :home
-    get "/all", PostController, :index
     get "/:number", PostController, :show
   end
 
