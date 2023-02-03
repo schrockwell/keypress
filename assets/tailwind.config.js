@@ -47,7 +47,7 @@ module.exports = {
               color: theme("colors.purple.500"),
               transitionProperty: "all",
               transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-              transitionDuration: "300ms",
+              transitionDuration: "150ms",
             },
             "a:hover": {
               color: theme("colors.purple.700"),

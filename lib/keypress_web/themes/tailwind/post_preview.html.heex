@@ -26,8 +26,10 @@
       <% end %>
     <% end %>
 
-    <div class="text-gray-400 flex justify-between mt-4">
-      <%= date(@post.published_at) %>
+    <div class="text-gray-400 mt-4">
+      <.link navigate={~p"/#{@post.number}"} class="transition-colors hover:text-gray-600">
+        <%= date(@post.published_at) %>
+      </.link>
       <%= if @post.updated_at do %>
         • Updated <%= date(@post.updated_at) %>
       <% end %>

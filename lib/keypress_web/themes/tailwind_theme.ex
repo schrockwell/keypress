@@ -10,7 +10,7 @@ defmodule KeypressWeb.TailwindTheme do
 
   def a(assigns) do
     ~H"""
-    <.link class="text-purple-500 transition-colors duration-300 hover:text-purple-700" {@rest}>
+    <.link class="text-purple-500 transition-colors duration-300 hover:text-purple-700 underline" {@rest}>
       <%= render_slot(@inner_block) %>
     </.link>
     """
