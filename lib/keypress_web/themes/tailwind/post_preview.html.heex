@@ -17,11 +17,11 @@
     <%= if @post.body do %>
       <%= if post_type(@post) == :short do %>
         <div class="text-2xl">
-          <%= @post.body %>
+          <.post_body post={@post} />
         </div>
       <% else %>
-        <div class="">
-          <%= @post.body %>
+        <div class="prose">
+          <.post_body post={@post} />
         </div>
       <% end %>
     <% end %>
