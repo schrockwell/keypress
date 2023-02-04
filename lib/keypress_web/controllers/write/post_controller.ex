@@ -40,10 +40,10 @@ defmodule KeypressWeb.Write.PostController do
     conn.assigns.post
     |> BlogAdmin.save_post(post_params, publish: true)
     |> case do
-      {:ok, _post} ->
+      {:ok, post} ->
         conn
         |> put_flash(:success, "Post published")
-        |> redirect(to: ~p"/posts")
+        |> redirect(to: ~p"/#{post.number}")
 
       {:error, changeset} ->
         render(conn, :new, changeset: changeset)
@@ -68,14 +68,19 @@ defmodule KeypressWeb.Write.PostController do
     conn.assigns.post
     |> BlogAdmin.save_post(post_params, publish: true)
     |> case do
-      {:ok, _post} ->
+      {:ok, post} ->
         conn
         |> put_flash(:success, "Post published")
-        |> redirect(to: ~p"/posts")
+        |> redirect(to: ~p"/#{post.number}")
 
       {:error, changeset} ->
         render(conn, :edit, changeset: changeset)
     end
+  end
+
+  def update(conn, %{"action" => "delete"}) do
+    BlogAdmin.delete_post(conn.assigns.post)
+    redirect(conn, to: ~p"/posts")
   end
 
   defp assign_post(conn, _opts) do

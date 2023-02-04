@@ -1,1 +1,1 @@
-<Theme.post_preview theme={@theme} post={@post} />
+<Theme.post_preview theme={@theme} post={@post} editable={Auth.signed_in?(@conn)} />

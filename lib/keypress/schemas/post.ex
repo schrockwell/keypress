@@ -8,6 +8,7 @@ defmodule Keypress.Schemas.Post do
     field :url, :string
     field :type, Ecto.Enum, values: [:link, :short, :long], default: :short
     field :published_at, :utc_datetime_usec
+    field :edited_at, :utc_datetime_usec
 
     timestamps()
   end

@@ -44,6 +44,8 @@ defmodule KeypressWeb do
 
       import Plug.Conn
 
+      alias KeypressWeb.Auth
+
       unquote(verified_routes())
     end
   end
@@ -88,6 +90,7 @@ defmodule KeypressWeb do
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
+      alias KeypressWeb.Auth
       alias KeypressWeb.Theme
       import KeypressWeb.HTML
 

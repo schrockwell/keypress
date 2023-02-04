@@ -12,6 +12,32 @@
     </script>
   </head>
   <body class="bg-white antialiased">
+    <%= if Auth.signed_in?(@conn) do %>
+      <div class="flex items-center justify-between bg-purple-900 text-white px-2 drop-shadow mb-2 text-sm font-semibold">
+        <div class="flex gap-2">
+          <.link href={~p"/"} class="hover:bg-purple-700 px-4 py-2 transition-colors">
+            <Heroicons.home class="w-5 h-5" />
+          </.link>
+          <.link href={~p"/posts/new?type=short"} class="hover:bg-purple-700 px-4 py-2 transition-colors">
+            <.post_type_icon type={:short} class="w-5 h-5" />
+          </.link>
+          <.link href={~p"/posts/new?type=long"} class="hover:bg-purple-700 px-4 py-2 transition-colors">
+            <.post_type_icon type={:long} class="w-5 h-5" />
+          </.link>
+          <.link href={~p"/posts/new?type=link"} class="hover:bg-purple-700 px-4 py-2 transition-colors">
+            <.post_type_icon type={:link} class="w-5 h-5" />
+          </.link>
+          <.link href={~p"/posts"} class="hover:bg-purple-700 px-4 py-2 transition-colors">
+            <Heroicons.pencil class="w-5 h-5" />
+          </.link>
+        </div>
+        <div>
+          <.link href={~p"/signin"} class="hover:bg-purple-700 px-4 py-2 transition-colors" method="delete">
+            Sign Out
+          </.link>
+        </div>
+      </div>
+    <% end %>
     <%= @inner_content %>
   </body>
 </html>

@@ -9,6 +9,7 @@ defmodule Keypress.Repo.Migrations.CreatePosts do
       add :type, :string, null: false
       add :number, :integer
       add :published_at, :utc_datetime
+      add :edited_at, :utc_datetime
       timestamps()
     end
 

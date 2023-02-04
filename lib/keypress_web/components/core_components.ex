@@ -226,6 +226,29 @@ defmodule KeypressWeb.CoreComponents do
   end
 
   @doc """
+  Renders a link styled like a button.
+  """
+  attr :class, :string, default: nil
+  attr :rest, :global, include: ~w(navigate)
+
+  slot :inner_block, required: true
+
+  def button_link(assigns) do
+    ~H"""
+    <.link
+      class={[
+        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3",
+        "text-sm font-semibold leading-6 text-white active:text-white/80 transition-colors",
+        @class
+      ]}
+      {@rest}
+    >
+      <%= render_slot(@inner_block) %>
+    </.link>
+    """
+  end
+
+  @doc """
   Renders an input with label and error messages.
 
   A `%Phoenix.HTML.Form{}` and field name may be passed to the input

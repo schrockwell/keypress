@@ -11,12 +11,12 @@ defmodule KeypressWeb.Router do
     plug KeypressWeb.ThemePlug
   end
 
-  pipeline :author do
-    plug :author_basic_auth
+  pipeline :authenticated do
+    plug KeypressWeb.RequireAuthenticatedPlug
   end
 
   scope "/", KeypressWeb.Write do
-    pipe_through [:browser, :author]
+    pipe_through [:browser, :authenticated]
 
     resources "/posts", PostController
   end
@@ -24,12 +24,7 @@ defmodule KeypressWeb.Router do
   scope "/", KeypressWeb do
     pipe_through :browser
     get "/", PageController, :home
+    resources "/signin", SessionController, singleton: true, only: [:show, :delete]
     get "/:number", PostController, :show
-  end
-
-  defp author_basic_auth(conn, _opts) do
-    username = ""
-    password = System.fetch_env!("AUTHOR_PASSWORD")
-    Plug.BasicAuth.basic_auth(conn, username: username, password: password)
   end
 end

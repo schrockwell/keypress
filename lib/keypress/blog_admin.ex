@@ -66,7 +66,7 @@ defmodule Keypress.BlogAdmin do
 
   def publish_post!(%Post{} = post) do
     post
-    |> change(updated_at: DateTime.utc_now())
+    |> change(edited_at: DateTime.utc_now())
     |> Repo.update!()
   end
 
@@ -78,5 +78,9 @@ defmodule Keypress.BlogAdmin do
       nil -> 1
       number -> number + 1
     end
+  end
+
+  def delete_post(post) do
+    Repo.delete(post)
   end
 end
