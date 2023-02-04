@@ -11,9 +11,10 @@
 # and so on) as they will fail if something goes wrong.
 
 {:ok, _} =
-  Keypress.Blog.save_post(
+  Keypress.BlogAdmin.save_post(
     %Keypress.Schemas.Post{},
     %{
+      type: :link,
       title: "Some link",
       url: "http://example.com",
       body: "some body once told me"
@@ -22,18 +23,20 @@
   )
 
 {:ok, _} =
-  Keypress.Blog.save_post(
+  Keypress.BlogAdmin.save_post(
     %Keypress.Schemas.Post{},
     %{
+      type: :short,
       body: "some tweet like thing or whatever"
     },
     publish: true
   )
 
 {:ok, updated_post} =
-  Keypress.Blog.save_post(
+  Keypress.BlogAdmin.save_post(
     %Keypress.Schemas.Post{},
     %{
+      type: :long,
       title: "Some long",
       body: """
       lorem ipsum dolor sit amet
@@ -58,12 +61,13 @@
     publish: true
   )
 
-{:ok, _updated_post} = Keypress.Blog.save_post(updated_post, %{title: "some long updated"}, publish: true)
+{:ok, _updated_post} = Keypress.BlogAdmin.save_post(updated_post, %{title: "some long updated"}, publish: true)
 
 {:ok, _} =
-  Keypress.Blog.save_post(
+  Keypress.BlogAdmin.save_post(
     %Keypress.Schemas.Post{},
     %{
+      type: :long,
       title: "Some draft",
       body: "lorem ipsum dolor sit amet"
     },

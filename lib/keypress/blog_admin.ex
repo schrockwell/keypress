@@ -27,7 +27,8 @@ defmodule Keypress.BlogAdmin do
 
   def change_post(%Post{} = post, params \\ %{}) do
     post
-    |> cast(params, [:title, :body, :url])
+    |> cast(params, [:title, :body, :url, :type])
+    |> validate_required([:type])
   end
 
   def save_post(%Post{} = post, params \\ %{}, opts \\ []) do

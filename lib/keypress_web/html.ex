@@ -22,19 +22,11 @@ defmodule KeypressWeb.HTML do
     end
   end
 
-  def post_type(%Post{} = post) do
-    cond do
-      post.url -> :link
-      post.title -> :long
-      :else -> :short
-    end
-  end
-
   attr :post, Post, required: true
   attr :icon_attrs, :global
 
   def post_icon(assigns) do
-    case post_type(assigns.post) do
+    case assigns.post.type do
       :link -> ~H"<Heroicons.link {@icon_attrs} />"
       :long -> ~H"<Heroicons.document_text {@icon_attrs} />"
       :short -> ~H"<Heroicons.chat_bubble_left {@icon_attrs} />"

@@ -6,11 +6,12 @@ defmodule Keypress.Repo.Migrations.CreatePosts do
       add :title, :string
       add :body, :string
       add :url, :string
+      add :type, :string, null: false
       add :number, :integer
       add :published_at, :utc_datetime
-      add :updated_at, :utc_datetime
+      timestamps()
     end
 
-    create index(:posts, :number)
+    create index(:posts, :number, unique: true)
   end
 end

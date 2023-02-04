@@ -1,12 +1,14 @@
 defmodule Keypress.Schemas.Post do
-  use Ecto.Schema
+  use Keypress.Schema
 
   schema "posts" do
     field :number, :integer
     field :title, :string
     field :body, :string
     field :url, :string
-    field :updated_at, :utc_datetime_usec
+    field :type, Ecto.Enum, values: [:link, :short, :long]
     field :published_at, :utc_datetime_usec
+
+    timestamps()
   end
 end
