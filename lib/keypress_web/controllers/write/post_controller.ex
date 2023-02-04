@@ -7,11 +7,19 @@ defmodule KeypressWeb.Write.PostController do
   plug :assign_post
 
   def index(conn, _params) do
-    render(conn, :index, drafts: BlogAdmin.list_all_drafts(), changeset: BlogAdmin.change_post(conn.assigns.post))
+    render(conn, :index,
+      drafts: BlogAdmin.list_all_drafts(),
+      changeset: BlogAdmin.change_post(conn.assigns.post),
+      action: ~p"/write"
+    )
   end
 
   def show(conn, _params) do
-    render(conn, :index, drafts: BlogAdmin.list_all_drafts(), changeset: BlogAdmin.change_post(conn.assigns.post))
+    render(conn, :index,
+      drafts: BlogAdmin.list_all_drafts(),
+      changeset: BlogAdmin.change_post(conn.assigns.post),
+      action: ~p"/write/#{conn.assigns.post.id}"
+    )
   end
 
   def create(conn, %{"action" => "save-draft", "post" => post_params}) do
@@ -24,7 +32,7 @@ defmodule KeypressWeb.Write.PostController do
         |> redirect(to: ~p"/write")
 
       {:error, changeset} ->
-        render(conn, :index, drafts: BlogAdmin.list_all_drafts(), changeset: changeset)
+        render(conn, :index, drafts: BlogAdmin.list_all_drafts(), changeset: changeset, action: ~p"/write")
     end
   end
 

@@ -3,10 +3,7 @@
     <div class="text-xl">Editing post</div>
   </div>
 <% end %>
-<.simple_form :let={f} for={@changeset} class="mb-8 pb-8 border-b">
-  <!-- Why do I need this???? -->
-  <.input type="hidden" id="_csrf_token" errors={[]} name="_csrf_token" value={Plug.CSRFProtection.get_csrf_token()} />
-
+<.simple_form :let={f} for={@changeset} class="mb-8 pb-8 border-b" action={@action}>
   <.input field={{f, :body}} type="textarea" label="Content" rows="6" />
   <.input field={{f, :title}} label="Title" />
   <.input field={{f, :url}} label="Link" placeholder="http://example.com" />
