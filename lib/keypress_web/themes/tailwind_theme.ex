@@ -5,7 +5,7 @@ defmodule KeypressWeb.TailwindTheme do
 
   embed_templates "tailwind/*"
 
-  attr :rest, :global
+  attr :rest, :global, include: ~w(href)
   slot :inner_block, required: true
 
   def a(assigns) do
