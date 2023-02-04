@@ -274,7 +274,7 @@ defmodule KeypressWeb.CoreComponents do
     assigns = assign_new(assigns, :checked, fn -> input_equals?(assigns.value, "true") end)
 
     ~H"""
-    <label phx-feedback-for={@name} class="flex items-center gap-4 text-sm leading-6 text-zinc-600">
+    <label phx-feedback-for={@name} class="flex items-center gap-4 text-sm leading-6 text-zinc-600" id={@id <> "_group"}>
       <input type="hidden" name={@name} value="false" />
       <input
         type="checkbox"
@@ -292,7 +292,7 @@ defmodule KeypressWeb.CoreComponents do
 
   def input(%{type: "select"} = assigns) do
     ~H"""
-    <div phx-feedback-for={@name}>
+    <div phx-feedback-for={@name} id={@id <> "_group"}>
       <.label for={@id}><%= @label %></.label>
       <select
         id={@id}
@@ -311,7 +311,7 @@ defmodule KeypressWeb.CoreComponents do
 
   def input(%{type: "textarea"} = assigns) do
     ~H"""
-    <div phx-feedback-for={@name}>
+    <div phx-feedback-for={@name} id={@id <> "_group"}>
       <.label for={@id}><%= @label %></.label>
       <textarea
         id={@id || @name}
@@ -332,7 +332,7 @@ defmodule KeypressWeb.CoreComponents do
 
   def input(assigns) do
     ~H"""
-    <div phx-feedback-for={@name}>
+    <div phx-feedback-for={@name} id={@id <> "_group"}>
       <.label for={@id}><%= @label %></.label>
       <input
         type={@type}
@@ -362,11 +362,12 @@ defmodule KeypressWeb.CoreComponents do
   Renders a label.
   """
   attr :for, :string, default: nil
+  attr :class, :string, default: nil
   slot :inner_block, required: true
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-800">
+    <label for={@for} class={["block text-sm font-semibold leading-6 text-zinc-800", @class]}>
       <%= render_slot(@inner_block) %>
     </label>
     """

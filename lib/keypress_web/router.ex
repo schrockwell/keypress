@@ -15,10 +15,10 @@ defmodule KeypressWeb.Router do
     plug :author_basic_auth
   end
 
-  scope "/write", KeypressWeb.Write do
+  scope "/", KeypressWeb.Write do
     pipe_through [:browser, :author]
 
-    resources "/", PostController
+    resources "/posts", PostController
   end
 
   scope "/", KeypressWeb do

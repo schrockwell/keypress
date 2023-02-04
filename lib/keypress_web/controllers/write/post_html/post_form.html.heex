@@ -1,0 +1,30 @@
+<.simple_form :let={f} for={@changeset} class="mb-8 pb-8 border-b" action={@action}>
+  <%= Phoenix.HTML.Form.hidden_input(f, :type) %>
+
+  <%= if Ecto.Changeset.get_field(@changeset, :type) == :link do %>
+    <.input field={{f, :url}} label="Link" placeholder="http://example.com" />
+  <% end %>
+
+  <%= if Ecto.Changeset.get_field(@changeset, :type) in [:link, :long] do %>
+    <.input field={{f, :title}} label="Title" />
+  <% end %>
+
+  <.input field={{f, :body}} type="textarea" label="Content" rows="6" />
+
+  <:actions>
+    <%= if @post.published_at do %>
+      <.button name="action" value="save-and-publish">Save and Publish</.button>
+    <% else %>
+      <div class="flex gap-x-4">
+        <.button name="action" value="save-and-publish">Save and Publish</.button>
+        <.button
+          name="action"
+          value="save-draft"
+          class="border bg-inherit text-inherit hover:bg-gray-100 hover:text-inherit"
+        >
+          Save Draft
+        </.button>
+      </div>
+    <% end %>
+  </:actions>
+</.simple_form>

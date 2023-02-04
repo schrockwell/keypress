@@ -5,17 +5,6 @@ defmodule KeypressWeb.TailwindTheme do
 
   embed_templates "tailwind/*"
 
-  attr :rest, :global, include: ~w(href)
-  slot :inner_block, required: true
-
-  def a(assigns) do
-    ~H"""
-    <.link class="text-purple-500 transition-colors duration-300 hover:text-purple-700 underline" {@rest}>
-      <%= render_slot(@inner_block) %>
-    </.link>
-    """
-  end
-
   attr :post, Post, required: true
 
   def post_body(assigns) do

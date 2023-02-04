@@ -4,22 +4,22 @@ defmodule KeypressWeb.Write.PostController do
   alias Keypress.BlogAdmin
   alias Keypress.Schemas.Post
 
-  plug :assign_post
+  plug :assign_post when action not in [:index]
 
   def index(conn, _params) do
-    render(conn, :index,
-      drafts: BlogAdmin.list_all_drafts(),
-      changeset: BlogAdmin.change_post(conn.assigns.post),
-      action: ~p"/write"
-    )
+    render(conn, :index, drafts: BlogAdmin.list_all_drafts())
   end
 
-  def show(conn, _params) do
-    render(conn, :index,
-      drafts: BlogAdmin.list_all_drafts(),
-      changeset: BlogAdmin.change_post(conn.assigns.post),
-      action: ~p"/write/#{conn.assigns.post.id}"
-    )
+  def new(conn, %{"type" => type}) do
+    render(conn, :new, changeset: BlogAdmin.change_post(conn.assigns.post, %{type: type}))
+  end
+
+  def new(conn, _) do
+    render(conn, :new_type)
+  end
+
+  def edit(conn, _) do
+    render(conn, :edit, changeset: BlogAdmin.change_post(conn.assigns.post))
   end
 
   def create(conn, %{"action" => "save-draft", "post" => post_params}) do
@@ -29,10 +29,10 @@ defmodule KeypressWeb.Write.PostController do
       {:ok, _post} ->
         conn
         |> put_flash(:success, "Draft saved")
-        |> redirect(to: ~p"/write")
+        |> redirect(to: ~p"/posts")
 
       {:error, changeset} ->
-        render(conn, :index, drafts: BlogAdmin.list_all_drafts(), changeset: changeset, action: ~p"/write")
+        render(conn, :new, changeset: changeset)
     end
   end
 
@@ -43,14 +43,42 @@ defmodule KeypressWeb.Write.PostController do
       {:ok, _post} ->
         conn
         |> put_flash(:success, "Post published")
-        |> redirect(to: ~p"/write")
+        |> redirect(to: ~p"/posts")
 
       {:error, changeset} ->
-        render(conn, :index, drafts: BlogAdmin.list_all_drafts(), changeset: changeset)
+        render(conn, :new, changeset: changeset)
     end
   end
 
-  defp assign_post(conn, _) do
+  def update(conn, %{"action" => "save-draft", "post" => post_params}) do
+    conn.assigns.post
+    |> BlogAdmin.save_post(post_params, publish: false)
+    |> case do
+      {:ok, _post} ->
+        conn
+        |> put_flash(:success, "Draft saved")
+        |> redirect(to: ~p"/posts")
+
+      {:error, changeset} ->
+        render(conn, :edit, changeset: changeset)
+    end
+  end
+
+  def update(conn, %{"action" => "save-and-publish", "post" => post_params}) do
+    conn.assigns.post
+    |> BlogAdmin.save_post(post_params, publish: true)
+    |> case do
+      {:ok, _post} ->
+        conn
+        |> put_flash(:success, "Post published")
+        |> redirect(to: ~p"/posts")
+
+      {:error, changeset} ->
+        render(conn, :edit, changeset: changeset)
+    end
+  end
+
+  defp assign_post(conn, _opts) do
     if id = conn.params["id"] do
       assign(conn, :post, BlogAdmin.get_post_by_id!(id))
     else

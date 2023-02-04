@@ -29,6 +29,16 @@ defmodule Keypress.BlogAdmin do
     post
     |> cast(params, [:title, :body, :url, :type])
     |> validate_required([:type])
+    |> validate_type_required()
+  end
+
+  defp validate_type_required(changeset) do
+    case get_field(changeset, :type) do
+      :short -> validate_required(changeset, [:body])
+      :long -> validate_required(changeset, [:body, :title])
+      :link -> validate_required(changeset, [:url, :title])
+      _else -> changeset
+    end
   end
 
   def save_post(%Post{} = post, params \\ %{}, opts \\ []) do

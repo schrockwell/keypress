@@ -22,11 +22,11 @@ defmodule KeypressWeb.HTML do
     end
   end
 
-  attr :post, Post, required: true
+  attr :type, :atom, required: true
   attr :icon_attrs, :global
 
-  def post_icon(assigns) do
-    case assigns.post.type do
+  def post_type_icon(assigns) do
+    case assigns.type do
       :link -> ~H"<Heroicons.link {@icon_attrs} />"
       :long -> ~H"<Heroicons.document_text {@icon_attrs} />"
       :short -> ~H"<Heroicons.chat_bubble_left {@icon_attrs} />"
@@ -39,5 +39,28 @@ defmodule KeypressWeb.HTML do
     else
       Calendar.strftime(datetime, "%B %-d, %Y")
     end
+  end
+
+  attr :rest, :global, include: ~w(href navigate)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+
+  def a(assigns) do
+    ~H"""
+    <.link class={["text-purple-500 transition-colors duration-300 hover:text-purple-700 underline", @class]} {@rest}>
+      <%= render_slot(@inner_block) %>
+    </.link>
+    """
+  end
+
+  attr :class, :string, default: nil
+  slot :inner_block
+
+  def h2(assigns) do
+    ~H"""
+    <h2 class={["text-lg border-b mb-1 pb-1 font-medium", @class]}>
+      <%= render_slot(@inner_block) %>
+    </h2>
+    """
   end
 end
