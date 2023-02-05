@@ -5,7 +5,7 @@
   </div>
 <% end %>
 <%= for post <- @drafts do %>
-  <.a href={~p"/posts/#{post.id}/edit"} class="flex items-center gap-2 my-1">
+  <.a navigate={~p"/posts/#{post.id}/edit"} class="flex items-center gap-2 my-1">
     <.post_type_icon type={post.type} class="w-6 h-6" />
     <%= post_title(post) %>
   </.a>

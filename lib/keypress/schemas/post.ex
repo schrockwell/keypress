@@ -9,7 +9,9 @@ defmodule Keypress.Schemas.Post do
     field :type, Ecto.Enum, values: [:link, :short, :long], default: :short
     field :published_at, :utc_datetime_usec
     field :edited_at, :utc_datetime_usec
-
     timestamps()
+
+    # Virtual
+    field :publish_now, :boolean, virtual: true, default: true
   end
 end

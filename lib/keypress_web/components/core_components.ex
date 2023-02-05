@@ -297,7 +297,11 @@ defmodule KeypressWeb.CoreComponents do
     assigns = assign_new(assigns, :checked, fn -> input_equals?(assigns.value, "true") end)
 
     ~H"""
-    <label phx-feedback-for={@name} class="flex items-center gap-4 text-sm leading-6 text-zinc-600" id={@id <> "_group"}>
+    <label
+      phx-feedback-for={@name}
+      class="flex items-center gap-2 text-sm leading-6 text-zinc-600 cursor-pointer"
+      id={@id <> "_group"}
+    >
       <input type="hidden" name={@name} value="false" />
       <input
         type="checkbox"

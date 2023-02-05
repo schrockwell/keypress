@@ -15,16 +15,25 @@ defmodule KeypressWeb.Router do
     plug KeypressWeb.RequireAuthenticatedPlug
   end
 
-  scope "/", KeypressWeb.Write do
+  scope "/", KeypressWeb.Admin do
     pipe_through [:browser, :authenticated]
 
-    resources "/posts", PostController
+    live_session :admin, on_mount: {KeypressWeb.OnMount, :admin} do
+      live "/posts", PostLive.Index, :index
+      live "/posts/new/:type", PostLive.Edit, :new
+      live "/posts/:id/edit", PostLive.Edit, :edit
+    end
   end
 
   scope "/", KeypressWeb do
     pipe_through :browser
-    get "/", PageController, :home
+
     resources "/signin", SessionController, singleton: true, only: [:show, :delete]
+
+    get "/", PostController, :index
     get "/:number", PostController, :show
+
+    live_session :public, on_mount: {KeypressWeb.OnMount, :public} do
+    end
   end
 end

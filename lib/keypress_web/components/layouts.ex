@@ -7,6 +7,10 @@ defmodule KeypressWeb.Layouts do
 
   # Delegate to the current theme instead of using layouts/app.html.heex
   def app(assigns) do
-    KeypressWeb.Theme.app(assigns)
+    ~H"""
+    <KeypressWeb.Theme.app theme={@theme} flash={@flash}>
+      <%= @inner_content %>
+    </KeypressWeb.Theme.app>
+    """
   end
 end

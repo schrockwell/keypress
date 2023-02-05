@@ -1,5 +1,5 @@
 <div class="mb-32 flex items-start space-x-8">
-  <.link href={~p"/#{@post.number}"} class="group text-purple-300 hover:text-purple-700 transition-all duration-300">
+  <.link navigate={~p"/#{@post.number}"} class="group text-purple-300 hover:text-purple-700 transition-all duration-300">
     <.post_type_icon type={@post.type} class="h-10 w-10 group-hover:-translate-y-1 duration-300" />
   </.link>
 
@@ -7,7 +7,7 @@
     <%= if post_title(@post) do %>
       <div class="text-2xl mb-4 flex">
         <%= if @post.url do %>
-          <.a href={@post.url}><%= post_title(@post) %></.a>
+          <.a navigate={@post.url}><%= post_title(@post) %></.a>
         <% else %>
           <%= post_title(@post) %>
         <% end %>
@@ -27,7 +27,7 @@
     <% end %>
 
     <div class="text-gray-400 mt-4">
-      <.link href={~p"/#{@post.number}"} class="transition-colors hover:text-gray-600">
+      <.link navigate={~p"/#{@post.number}"} class="transition-colors hover:text-gray-600">
         <%= date(@post.published_at) %>
       </.link>
       <%= if edit_date = post_edit_date(@post) do %>
@@ -35,7 +35,7 @@
       <% end %>
       <%= if @editable do %>
         •
-        <.link href={~p"/posts/#{@post.id}/edit"} class="transition-colors hover:text-gray-600">Edit</.link>
+        <.link navigate={~p"/posts/#{@post.id}/edit"} class="transition-colors hover:text-gray-600">Edit</.link>
       <% end %>
     </div>
   </div>

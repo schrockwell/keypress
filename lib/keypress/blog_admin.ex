@@ -27,7 +27,7 @@ defmodule Keypress.BlogAdmin do
 
   def change_post(%Post{} = post, params \\ %{}) do
     post
-    |> cast(params, [:title, :body, :url, :type])
+    |> cast(params, [:title, :body, :url, :type, :publish_now])
     |> validate_required([:type])
     |> validate_type_required()
   end
@@ -41,34 +41,37 @@ defmodule Keypress.BlogAdmin do
     end
   end
 
-  def save_post(%Post{} = post, params \\ %{}, opts \\ []) do
+  def save_post(%Post{} = post, params \\ %{}) do
     post
     |> change_post(params)
     |> Repo.insert_or_update()
     |> case do
       {:ok, post} ->
-        if opts[:publish] do
-          {:ok, publish_post!(post)}
-        else
-          {:ok, post}
-        end
+        publish_post!(post)
 
       {:error, changeset} ->
         {:error, changeset}
     end
   end
 
-  def publish_post!(%Post{number: nil, published_at: nil} = post) do
-    post
-    |> change(number: get_next_number(), published_at: DateTime.utc_now())
-    |> Repo.update!()
+  # Publish and unpublished post: publish it
+  def publish_post!(%Post{publish_now: true, number: nil, published_at: nil} = post) do
+    {:ok, :published,
+     post
+     |> change(number: get_next_number(), published_at: DateTime.utc_now())
+     |> Repo.update!()}
   end
 
-  def publish_post!(%Post{} = post) do
-    post
-    |> change(edited_at: DateTime.utc_now())
-    |> Repo.update!()
+  # Publishing an already-published post: only change edited_at
+  def publish_post!(%Post{published_at: %DateTime{}} = post) do
+    {:ok, :updated,
+     post
+     |> change(edited_at: DateTime.utc_now())
+     |> Repo.update!()}
   end
+
+  # Draft post: do nothing
+  def publish_post!(post), do: {:ok, :draft, post}
 
   defp get_next_number do
     Post
