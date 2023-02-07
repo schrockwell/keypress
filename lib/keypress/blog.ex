@@ -4,10 +4,10 @@ defmodule Keypress.Blog do
   alias Keypress.Repo
   alias Keypress.Schemas.Post
 
-  def get_published_post_by_number!(number) do
+  def get_published_post!(id) do
     Post
     |> where([p], not is_nil(p.published_at))
-    |> where([p], p.number == ^number)
+    |> where([p], p.id == ^id)
     |> Repo.one!()
   end
 
@@ -17,7 +17,7 @@ defmodule Keypress.Blog do
     Post
     |> limit(^limit)
     |> where([p], not is_nil(p.published_at))
-    |> order_by([p], desc: p.number)
+    |> order_by([p], desc: p.published_at)
     |> Repo.all()
   end
 end

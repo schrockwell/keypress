@@ -32,7 +32,7 @@ defmodule KeypressWeb.Router do
 
     live_session :public, on_mount: {KeypressWeb.OnMount, :public} do
       live "/", PostLive.Index, :index
-      live "/:number", PostLive.Show, :show
+      live "/:id", PostLive.Show, :show
     end
   end
 end

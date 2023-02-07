@@ -29,7 +29,7 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
   def handle_event("save", %{"post" => post_params}, socket) do
     case BlogAdmin.save_post(socket.assigns.post, post_params) do
       {:ok, published, post} when published in [:published, :updated] ->
-        {:noreply, push_navigate(socket, to: ~p"/#{post.number}")}
+        {:noreply, push_navigate(socket, to: ~p"/#{post.id}")}
 
       {:ok, :draft, _post} ->
         {:noreply, push_navigate(socket, to: ~p"/posts")}

@@ -2,7 +2,6 @@ defmodule Keypress.Schemas.Post do
   use Keypress.Schema
 
   schema "posts" do
-    field :number, :integer
     field :title, :string
     field :body, :string
     field :url, :string

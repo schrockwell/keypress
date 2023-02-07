@@ -4,7 +4,7 @@
   id={"post-preview-#{@post.id}"}
 >
   <.link
-    navigate={~p"/#{@post.number || 0}"}
+    navigate={~p"/#{@post.id || 0}"}
     class="group text-purple-300 hover:text-purple-700 transition-all duration-300"
   >
     <.post_type_icon
@@ -36,7 +36,7 @@
     <% end %>
 
     <div class="text-gray-400 mt-4 text-sm md:text-base">
-      <.link navigate={~p"/#{@post.number || 0}"} class="transition-colors hover:text-gray-600">
+      <.link navigate={~p"/#{@post.id || 0}"} class="transition-colors hover:text-gray-600">
         <%= date(@post.published_at || DateTime.utc_now()) %>
       </.link>
       <%= if post_edit_datetime = post_edit_datetime(@post) do %>

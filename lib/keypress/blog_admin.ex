@@ -19,7 +19,7 @@ defmodule Keypress.BlogAdmin do
 
     Post
     |> limit(^limit)
-    |> order_by([p], desc: p.number)
+    |> order_by([p], desc: p.id)
     |> Repo.all()
   end
 
@@ -61,10 +61,10 @@ defmodule Keypress.BlogAdmin do
   end
 
   # Publish and unpublished post: publish it
-  def publish_post!(%Post{publish_now: true, number: nil, published_at: nil} = post) do
+  def publish_post!(%Post{publish_now: true, published_at: nil} = post) do
     {:ok, :published,
      post
-     |> change(number: get_next_number(), published_at: DateTime.utc_now())
+     |> change(published_at: DateTime.utc_now())
      |> Repo.update!()}
   end
 
@@ -78,16 +78,6 @@ defmodule Keypress.BlogAdmin do
 
   # Draft post: do nothing
   def publish_post!(post), do: {:ok, :draft, post}
-
-  defp get_next_number do
-    Post
-    |> select([p], max(p.number))
-    |> Repo.one()
-    |> case do
-      nil -> 1
-      number -> number + 1
-    end
-  end
 
   def delete_post(post) do
     Repo.delete(post)
