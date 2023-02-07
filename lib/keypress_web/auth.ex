@@ -1,19 +1,24 @@
 defmodule KeypressWeb.Auth do
-  import Plug.Conn
+  alias Phoenix.LiveView.Socket
+  alias Plug.Conn
 
-  def signed_in?(conn) do
-    !!get_session(conn, "authenticated")
+  def signed_in?(%Plug.Conn{} = conn) do
+    !!Conn.get_session(conn, "authenticated")
   end
 
-  def sign_in(conn) do
+  def signed_in?(%Socket{} = socket) do
+    socket.assigns.authenticated?
+  end
+
+  def sign_in(%Plug.Conn{} = conn) do
     if signed_in?(conn) do
       conn
     else
-      put_session(conn, "authenticated", true)
+      Conn.put_session(conn, "authenticated", true)
     end
   end
 
-  def sign_out(conn) do
-    clear_session(conn)
+  def sign_out(%Plug.Conn{} = conn) do
+    Conn.clear_session(conn)
   end
 end

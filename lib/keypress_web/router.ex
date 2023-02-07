@@ -30,10 +30,9 @@ defmodule KeypressWeb.Router do
 
     resources "/signin", SessionController, singleton: true, only: [:show, :delete]
 
-    get "/", PostController, :index
-    get "/:number", PostController, :show
-
     live_session :public, on_mount: {KeypressWeb.OnMount, :public} do
+      live "/", PostLive.Index, :index
+      live "/:number", PostLive.Show, :show
     end
   end
 end

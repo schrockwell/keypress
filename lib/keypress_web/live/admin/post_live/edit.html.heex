@@ -27,9 +27,11 @@
     />
   </div>
 
-  <div class={[visible_if(@mode == :preview), "border rounded-md p-8"]}>
-    <Theme.post_preview theme={@theme} post={@post_preview} editable={false} />
-  </div>
+  <%= if @mode == :preview do %>
+    <div class="border rounded-md p-8">
+      <Theme.post_preview theme={@theme} post={@post_preview} editable={false} />
+    </div>
+  <% end %>
 
   <:actions :let={f}>
     <div>

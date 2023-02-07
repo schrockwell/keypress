@@ -39,12 +39,26 @@ const EditPostKeys = {
   },
 };
 
+const HighlightHook = {
+  mounted() {
+    this.highlight();
+  },
+  updated() {
+    this.highlight();
+  },
+  highlight() {
+    this.el.querySelectorAll("pre code").forEach((el) => {
+      hljs.highlightElement(el);
+    });
+  },
+};
+
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
-  hooks: { EditPostKeys },
+  hooks: { EditPostKeys, HighlightHook },
 });
 
 // Show progress bar on live navigation and form submits
@@ -62,9 +76,3 @@ liveSocket.connect();
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket;
-
-document.addEventListener("DOMContentLoaded", (event) => {
-  document.querySelectorAll("pre code").forEach((el) => {
-    hljs.highlightElement(el);
-  });
-});

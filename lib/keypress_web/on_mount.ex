@@ -1,9 +1,11 @@
 defmodule KeypressWeb.OnMount do
-  def on_mount(:public, _params, %{"theme" => theme} = _session, socket) do
-    {:cont, Phoenix.Component.assign(socket, theme: theme)}
+  import Phoenix.Component
+
+  def on_mount(:public, _params, %{"theme" => theme} = session, socket) do
+    {:cont, assign(socket, theme: theme, authenticated?: Map.get(session, "authenticated", false))}
   end
 
   def on_mount(:admin, _params, %{"authenticated" => true} = _session, socket) do
-    {:cont, Phoenix.Component.assign(socket, theme: "tailwind")}
+    {:cont, assign(socket, theme: "tailwind", authenticated?: true)}
   end
 end
