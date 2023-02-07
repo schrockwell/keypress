@@ -18,7 +18,7 @@ defmodule KeypressWeb.HTML do
       post.title -> post.title
       post.url -> post.url
       post.body -> nil
-      :else -> "(untitled)"
+      :else -> "Untitled"
     end
   end
 

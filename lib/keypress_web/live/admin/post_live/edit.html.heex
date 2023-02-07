@@ -1,32 +1,60 @@
-<.simple_form :let={f} for={@changeset} class="mb-8 pb-8 border-b" phx-submit="save">
-  <%= Phoenix.HTML.Form.hidden_input(f, :type) %>
+<div id="edit-post-keys" phx-hook="EditPostKeys" />
 
-  <%= if Ecto.Changeset.get_field(@changeset, :type) in [:link, :long] do %>
-    <.input field={{f, :title}} placeholder="Title" autofocus={true} />
-  <% end %>
+<div class="flex gap-4 my-4">
+  <.mode_button mode={:edit} label="Edit" current_mode={@mode} />
+  <.mode_button mode={:preview} label="Preview" current_mode={@mode} />
+</div>
 
-  <%= if Ecto.Changeset.get_field(@changeset, :type) == :link do %>
-    <.input field={{f, :url}} placeholder="http://example.com" autofocus={true} />
-  <% end %>
-
-  <.input field={{f, :body}} type="textarea" placeholder="Say something" rows="10" autofocus={true} />
-
-  <:actions :let={f}>
-    <div>
-      <%= if @post.published_at do %>
-        <.button>Publish Update</.button>
-      <% else %>
-        <div class="flex gap-x-6">
-          <.button name="action" value="save-and-publish">Save</.button>
-          <.input field={{f, :publish_now}} type="checkbox" label="Publish Now" />
-        </div>
-      <% end %>
+<%= case @mode do %>
+  <% :preview -> %>
+    <div class="my-8">
+      <Theme.post_preview theme={@theme} post={@post_preview} editable={false} />
     </div>
+  <% :edit -> %>
+    <.simple_form
+      :let={f}
+      for={@changeset}
+      id="post-form"
+      class="mb-8 pb-8 border-b"
+      phx-change="validate"
+      phx-submit="save"
+    >
+      <%= Phoenix.HTML.Form.hidden_input(f, :type) %>
 
-    <%= if @post.id do %>
-      <.button type="button" phx-click="delete" class="bg-red-600 hover:bg-red-700" data-confirm="Are you sure?">
-        Delete
-      </.button>
-    <% end %>
-  </:actions>
-</.simple_form>
+      <%= if Ecto.Changeset.get_field(@changeset, :type) in [:link, :long] do %>
+        <.input field={{f, :title}} placeholder="Title" autofocus={true} phx-debounce="250" />
+      <% end %>
+
+      <%= if Ecto.Changeset.get_field(@changeset, :type) == :link do %>
+        <.input field={{f, :url}} placeholder="http://example.com" autofocus={true} phx-debounce="250" />
+      <% end %>
+
+      <.input
+        field={{f, :body}}
+        type="textarea"
+        placeholder="Say something"
+        rows="10"
+        autofocus={true}
+        phx-debounce="250"
+      />
+
+      <:actions :let={f}>
+        <div>
+          <%= if @post.published_at do %>
+            <.button type="submit">Publish Update</.button>
+          <% else %>
+            <div class="flex gap-x-6">
+              <.button type="submit">Save</.button>
+              <.input field={{f, :publish_now}} type="checkbox" label="Publish Now" />
+            </div>
+          <% end %>
+        </div>
+
+        <%= if @post.id do %>
+          <.button type="button" phx-click="delete" class="bg-red-600 hover:bg-red-700" data-confirm="Are you sure?">
+            Delete
+          </.button>
+        <% end %>
+      </:actions>
+    </.simple_form>
+<% end %>

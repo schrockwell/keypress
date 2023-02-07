@@ -23,11 +23,30 @@ import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 
+const EditPostKeys = {
+  mounted() {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && e.metaKey) {
+        document.querySelector("#post-form button[type=submit]").click();
+        e.preventDefault();
+      }
+
+      if (e.key === "e" && e.metaKey) {
+        this.pushEvent("toggle-mode");
+        e.preventDefault();
+      }
+
+      console.log(e);
+    });
+  },
+};
+
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
+  hooks: { EditPostKeys },
 });
 
 // Show progress bar on live navigation and form submits

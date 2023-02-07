@@ -6,7 +6,12 @@ defmodule Keypress.BlogAdmin do
   alias Keypress.Schemas.Post
 
   def get_post_by_id!(id) do
-    Repo.get!(Post, id)
+    Post
+    |> Repo.get!(id)
+    |> case do
+      %Post{published_at: nil} = post -> %{post | publish_now: false}
+      post -> %{post | publish_now: true}
+    end
   end
 
   def list_all_posts(opts \\ []) do
@@ -25,11 +30,12 @@ defmodule Keypress.BlogAdmin do
     |> Repo.all()
   end
 
-  def change_post(%Post{} = post, params \\ %{}) do
+  def change_post(%Post{} = post, params \\ %{}, action \\ nil) do
     post
     |> cast(params, [:title, :body, :url, :type, :publish_now])
     |> validate_required([:type])
     |> validate_type_required()
+    |> Map.put(:action, action)
   end
 
   defp validate_type_required(changeset) do
