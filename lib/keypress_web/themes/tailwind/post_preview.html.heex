@@ -17,7 +17,7 @@
     <%= if @post.title do %>
       <div class="text-xl md:text-2xl mb-4 flex">
         <%= if @post.url do %>
-          <.a navigate={@post.url}><%= @post.title %></.a>
+          <.a href={@post.url}><%= @post.title %></.a>
         <% else %>
           <%= @post.title %>
         <% end %>
