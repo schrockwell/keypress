@@ -13,12 +13,25 @@ defmodule KeypressWeb.HTML do
     end
   end
 
-  def post_title(%Post{} = post) do
+  def post_description(%Post{} = post) do
     cond do
       post.title -> post.title
       post.url -> post.url
-      post.body -> nil
+      post.body -> truncate(post.body, 100)
       :else -> "Untitled"
+    end
+  end
+
+  defp truncate(string, max_length) do
+    if String.length(string) < max_length do
+      string
+    else
+      string
+      |> String.slice(0..(max_length - 1))
+      |> String.split(" ")
+      |> Enum.slice(0..-2)
+      |> Enum.join(" ")
+      |> then(&(&1 <> "…"))
     end
   end
 

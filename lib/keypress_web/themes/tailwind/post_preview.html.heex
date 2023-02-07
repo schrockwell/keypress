@@ -1,25 +1,28 @@
-<div class={["flex items-start space-x-8", @class]}>
+<div class={["flex items-start space-x-4 md:space-x-8", @class]}>
   <.link
     navigate={~p"/#{@post.number || 0}"}
     class="group text-purple-300 hover:text-purple-700 transition-all duration-300"
   >
-    <.post_type_icon type={@post.type} class="h-10 w-10 group-hover:-translate-y-1 duration-300" />
+    <.post_type_icon
+      type={@post.type}
+      class="h-6 w-6 mt-1 md:mt-0 md:h-10 md:w-10 group-hover:-translate-y-1 duration-300"
+    />
   </.link>
 
   <div class="flex-grow">
-    <%= if post_title(@post) do %>
-      <div class="text-2xl mb-4 flex">
+    <%= if @post.title do %>
+      <div class="text-xl md:text-2xl mb-4 flex">
         <%= if @post.url do %>
-          <.a navigate={@post.url}><%= post_title(@post) %></.a>
+          <.a navigate={@post.url}><%= @post.title %></.a>
         <% else %>
-          <%= post_title(@post) %>
+          <%= @post.title %>
         <% end %>
       </div>
     <% end %>
 
     <%= if @post.body do %>
       <%= if @post.type == :short do %>
-        <div class="text-2xl prose">
+        <div class="text-xl md:text-2xl prose">
           <.post_body post={@post} />
         </div>
       <% else %>
@@ -29,7 +32,7 @@
       <% end %>
     <% end %>
 
-    <div class="text-gray-400 mt-4">
+    <div class="text-gray-400 mt-4 text-sm md:text-base">
       <.link navigate={~p"/#{@post.number || 0}"} class="transition-colors hover:text-gray-600">
         <%= date(@post.published_at || DateTime.utc_now()) %>
       </.link>

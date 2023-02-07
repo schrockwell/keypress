@@ -5,14 +5,7 @@
   <.mode_button mode={:preview} label="Preview" current_mode={@mode} />
 </div>
 
-<.simple_form
-  :let={f}
-  for={@changeset}
-  id="post-form"
-  class="mb-8 pb-8 border-b"
-  phx-change="validate"
-  phx-submit="save"
->
+<.simple_form :let={f} for={@changeset} id="post-form" phx-change="validate" phx-submit="save">
   <div class={visible_if(@mode == :edit)}>
     <%= Phoenix.HTML.Form.hidden_input(f, :type) %>
 

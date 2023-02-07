@@ -7,6 +7,6 @@
 <%= for post <- @drafts do %>
   <.a navigate={~p"/posts/#{post.id}/edit"} class="flex items-center gap-2 my-1">
     <.post_type_icon type={post.type} class="w-6 h-6" />
-    <%= post_title(post) %>
+    <%= post_description(post) %>
   </.a>
 <% end %>
