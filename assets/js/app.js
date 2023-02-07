@@ -35,8 +35,6 @@ const EditPostKeys = {
         this.pushEvent("toggle-mode");
         e.preventDefault();
       }
-
-      console.log(e);
     });
   },
 };

@@ -1,4 +1,4 @@
-<div class="mb-32 flex items-start space-x-8">
+<div class={["flex items-start space-x-8", @class]}>
   <.link
     navigate={~p"/#{@post.number || 0}"}
     class="group text-purple-300 hover:text-purple-700 transition-all duration-300"
@@ -33,8 +33,8 @@
       <.link navigate={~p"/#{@post.number || 0}"} class="transition-colors hover:text-gray-600">
         <%= date(@post.published_at || DateTime.utc_now()) %>
       </.link>
-      <%= if edit_date = post_edit_date(@post) do %>
-        • Edited <%= date(edit_date) %>
+      <%= if post_edit_datetime = post_edit_datetime(@post) do %>
+        • Edited <%= date(post_edit_datetime) %>
       <% end %>
       <%= if @editable do %>
         •

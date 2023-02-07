@@ -10,7 +10,7 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
        post: %Post{},
        changeset: BlogAdmin.change_post(%Post{}, %{type: type}),
        mode: :edit,
-       post_preview: nil
+       post_preview: %Post{}
      )}
   end
 
@@ -21,7 +21,8 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
      assign(socket,
        post: post,
        changeset: BlogAdmin.change_post(post),
-       mode: :edit
+       mode: :edit,
+       post_preview: %Post{}
      )}
   end
 
@@ -66,20 +67,24 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
     assign(socket, mode: :preview, post_preview: post_preview)
   end
 
+  defp visible_if(true), do: nil
+  defp visible_if(false), do: "hidden"
+
   attr :current_mode, :atom, values: [:edit, :preview], required: true
   attr :mode, :atom, values: [:edit, :preview], required: true
   attr :label, :string, required: true
 
   defp mode_button(assigns) do
     assigns =
-      assign(assigns,
-        selected_class:
-          if(assigns.mode == assigns.current_mode, do: "bg-black border-black text-white", else: "bg-white text-inherit")
+      assign(
+        assigns,
+        :selected_class,
+        if(assigns.mode == assigns.current_mode, do: "bg-black border-black text-white", else: "bg-white text-inherit")
       )
 
     ~H"""
     <button
-      class={["border rounded px-4 py-2 font-medium text-sm", @selected_class]}
+      class={["border rounded-md px-4 py-2 font-medium text-sm", @selected_class]}
       phx-click="change-mode"
       phx-value-mode={@mode}
     >

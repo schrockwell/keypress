@@ -22,9 +22,9 @@ defmodule KeypressWeb.HTML do
     end
   end
 
-  def post_edit_date(%Post{} = post) do
+  def post_edit_datetime(%Post{} = post) do
     if post.edited_at && post.published_at && DateTime.to_date(post.edited_at) != DateTime.to_date(post.published_at) do
-      DateTime.to_date(post.edited_at)
+      post.edited_at
     end
   end
 

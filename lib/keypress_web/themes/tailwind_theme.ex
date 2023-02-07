@@ -5,6 +5,9 @@ defmodule KeypressWeb.TailwindTheme do
 
   embed_templates "tailwind/*"
 
+  attr :class, :any, default: nil
+  def post_preview(assigns)
+
   attr :post, Post, required: true
 
   def post_body(assigns) do
