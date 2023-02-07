@@ -12,5 +12,6 @@ defmodule Keypress.Schemas.Post do
 
     # Virtual
     field :publish_now, :boolean, virtual: true, default: true
+    field :flag_as_edited, :boolean, virtual: true, default: false
   end
 end

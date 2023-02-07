@@ -39,8 +39,8 @@
       <.link navigate={~p"/#{@post.id || 0}"} class="transition-colors hover:text-gray-600">
         <%= date(@post.published_at || DateTime.utc_now()) %>
       </.link>
-      <%= if post_edit_datetime = post_edit_datetime(@post) do %>
-        • Edited <%= date(post_edit_datetime) %>
+      <%= if @post.edited_at do %>
+        • Edited <%= date(@post.edited_at) %>
       <% end %>
       <%= if @editable do %>
         •

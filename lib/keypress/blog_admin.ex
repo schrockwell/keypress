@@ -32,7 +32,7 @@ defmodule Keypress.BlogAdmin do
 
   def change_post(%Post{} = post, params \\ %{}, action \\ nil) do
     post
-    |> cast(params, [:title, :body, :url, :type, :publish_now])
+    |> cast(params, [:title, :body, :url, :type, :publish_now, :flag_as_edited])
     |> validate_required([:type])
     |> validate_type_required()
     |> Map.put(:action, action)
@@ -69,11 +69,15 @@ defmodule Keypress.BlogAdmin do
   end
 
   # Publishing an already-published post: only change edited_at
-  def publish_post!(%Post{published_at: %DateTime{}} = post) do
+  def publish_post!(%Post{published_at: %DateTime{}, flag_as_edited: true} = post) do
     {:ok, :updated,
      post
      |> change(edited_at: DateTime.utc_now())
      |> Repo.update!()}
+  end
+
+  def publish_post!(%Post{published_at: %DateTime{}, flag_as_edited: false} = post) do
+    {:ok, :updated, post}
   end
 
   # Draft post: do nothing
