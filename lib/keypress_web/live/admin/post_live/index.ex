@@ -4,6 +4,6 @@ defmodule KeypressWeb.Admin.PostLive.Index do
   alias Keypress.BlogAdmin
 
   def mount(_, _, socket) do
-    {:ok, assign(socket, drafts: BlogAdmin.list_all_drafts())}
+    {:ok, assign(socket, drafts: BlogAdmin.list_all_drafts(), page_title: "Drafts")}
   end
 end

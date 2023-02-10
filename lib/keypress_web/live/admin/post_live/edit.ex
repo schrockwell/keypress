@@ -15,6 +15,7 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
 
     {:noreply,
      assign(socket,
+       page_title: "New Post",
        post: %Post{},
        type: type,
        changeset: BlogAdmin.change_post(%Post{}, post_params),
@@ -28,6 +29,7 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
 
     {:noreply,
      assign(socket,
+       page_title: "Edit Post",
        post: post,
        type: post.type,
        changeset: BlogAdmin.change_post(post),

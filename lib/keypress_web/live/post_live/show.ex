@@ -4,6 +4,10 @@ defmodule KeypressWeb.PostLive.Show do
   alias Keypress.Blog
 
   def handle_params(%{"id" => id}, _uri, socket) do
-    {:noreply, assign(socket, post: Blog.get_published_post!(id))}
+    post = Blog.get_published_post!(id)
+
+    title = if post.type in [:long, :link], do: post.title, else: ~s|"#{truncate(post.body, 50)}"|
+
+    {:noreply, assign(socket, post: post, page_title: title)}
   end
 end

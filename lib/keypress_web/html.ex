@@ -3,6 +3,9 @@ defmodule KeypressWeb.HTML do
 
   alias Keypress.Schemas.Post
 
+  def my_page_title(nil), do: "Off By One"
+  def my_page_title(string), do: "#{string} · Off By One"
+
   def copyright_years do
     year = DateTime.utc_now().year
 
@@ -22,7 +25,7 @@ defmodule KeypressWeb.HTML do
     end
   end
 
-  defp truncate(string, max_length) do
+  def truncate(string, max_length) do
     if String.length(string) < max_length do
       string
     else
