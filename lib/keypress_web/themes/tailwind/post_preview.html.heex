@@ -1,5 +1,8 @@
 <div
-  class={["flex items-start space-x-4 md:space-x-8", @class]}
+  class={[
+    "flex items-start space-x-4 md:space-x-8 bg-white px-4 md:px-6 py-8 shadow-lg md:rounded-xl mb-8 md:mb-24 mt-4 md:mt-8",
+    @class
+  ]}
   phx-hook="HighlightHook"
   id={"post-preview-#{@post.id}"}
 >

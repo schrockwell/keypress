@@ -5,6 +5,6 @@ defmodule KeypressWeb.TailwindTheme do
   embed_templates "tailwind/*"
 
   def body_attrs do
-    %{class: "bg-white antialiased"}
+    %{class: "bg-slate-100 antialiased"}
   end
 end
