@@ -14,6 +14,8 @@ defmodule Keypress.Application do
       Keypress.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Keypress.PubSub},
+      # For rehydrading posts
+      Keypress.BlogAdmin.DraftAgent,
       # Start the Endpoint (http/https)
       KeypressWeb.Endpoint
       # Start a worker by calling: Keypress.Worker.start_link(arg)

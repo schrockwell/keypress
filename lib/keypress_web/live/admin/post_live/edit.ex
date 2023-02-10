@@ -5,10 +5,19 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
   alias Keypress.Schemas.Post
 
   def handle_params(%{"type" => type}, _url, %{assigns: %{live_action: :new}} = socket) do
+    type = String.to_existing_atom(type)
+
+    post_params =
+      case BlogAdmin.rehydrate_post_params(type) do
+        {:ok, post_params} -> post_params
+        :error -> %{type: type}
+      end
+
     {:noreply,
      assign(socket,
        post: %Post{},
-       changeset: BlogAdmin.change_post(%Post{}, %{type: type}),
+       type: type,
+       changeset: BlogAdmin.change_post(%Post{}, post_params),
        mode: :edit,
        post_preview: %Post{}
      )}
@@ -20,6 +29,7 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
     {:noreply,
      assign(socket,
        post: post,
+       type: post.type,
        changeset: BlogAdmin.change_post(post),
        mode: :edit,
        post_preview: %Post{}
@@ -29,9 +39,11 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
   def handle_event("save", %{"post" => post_params}, socket) do
     case BlogAdmin.save_post(socket.assigns.post, post_params) do
       {:ok, published, post} when published in [:published, :updated] ->
+        BlogAdmin.forget_post_params(post.type)
         {:noreply, push_navigate(socket, to: ~p"/#{post.id}")}
 
-      {:ok, :draft, _post} ->
+      {:ok, :draft, post} ->
+        BlogAdmin.forget_post_params(post.type)
         {:noreply, push_navigate(socket, to: ~p"/posts")}
 
       {:error, changeset} ->
@@ -45,6 +57,7 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
   end
 
   def handle_event("validate", %{"post" => post_params}, socket) do
+    BlogAdmin.remember_post_params(socket.assigns.type, post_params)
     {:noreply, assign(socket, :changeset, BlogAdmin.change_post(socket.assigns.post, post_params, :change))}
   end
 

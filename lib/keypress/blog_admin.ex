@@ -2,6 +2,7 @@ defmodule Keypress.BlogAdmin do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Keypress.BlogAdmin.DraftAgent
   alias Keypress.Repo
   alias Keypress.Schemas.Post
 
@@ -85,5 +86,17 @@ defmodule Keypress.BlogAdmin do
 
   def delete_post(post) do
     Repo.delete(post)
+  end
+
+  def remember_post_params(type, params) do
+    DraftAgent.save_params(type, params)
+  end
+
+  def rehydrate_post_params(type) do
+    DraftAgent.fetch_params(type)
+  end
+
+  def forget_post_params(type) do
+    DraftAgent.clear_params(type)
   end
 end
