@@ -4,6 +4,7 @@
   "description": "",
   "main": "js/app.js",
   "scripts": {
+    "deploy": "cd .. && mix assets.deploy && rm -f _build/esbuild*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
