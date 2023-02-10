@@ -11,7 +11,7 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class="bg-white antialiased">
+  <body {Theme.body_attrs(@theme)}>
     <%= if Auth.signed_in?(@conn) do %>
       <div class="flex items-center justify-between bg-purple-900 text-white px-2 drop-shadow mb-2 text-sm font-semibold">
         <div class="flex gap-2">
