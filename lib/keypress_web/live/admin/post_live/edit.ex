@@ -59,7 +59,11 @@ defmodule KeypressWeb.Admin.PostLive.Edit do
   end
 
   def handle_event("validate", %{"post" => post_params}, socket) do
-    BlogAdmin.remember_post_params(socket.assigns.type, post_params)
+    # Only keep new posts in-memory
+    if socket.assigns.post.id == nil do
+      BlogAdmin.remember_post_params(socket.assigns.type, post_params)
+    end
+
     {:noreply, assign(socket, :changeset, BlogAdmin.change_post(socket.assigns.post, post_params, :change))}
   end
 
