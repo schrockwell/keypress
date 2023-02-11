@@ -12,6 +12,7 @@ defmodule KeypressWeb.Theme do
 
   attr :flash, :map, required: true
   attr :theme, :string, required: true
+  attr :header?, :boolean, default: true
   slot :inner_block, required: true
 
   def app(%{theme: theme} = assigns) do

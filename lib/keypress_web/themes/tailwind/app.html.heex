@@ -1,16 +1,18 @@
 <div class="my-4 md:my-8 mx-auto md:max-w-[700px]">
-  <header class="px-4 md:px-0 md:mb-12">
-    <div class="flex w-full justify-between items-center">
-      <div class="font-medium">
-        <.link navigate={~p"/"} class="group text-xl text-black duration-300">
-          Off By <span class="inline-block group-hover:-translate-y-0.5 duration-300">One</span>
-        </.link>
+  <%= if @header? do %>
+    <header class="px-4 md:px-0 md:mb-12">
+      <div class="flex w-full justify-between items-center">
+        <div class="font-medium">
+          <.link navigate={~p"/"} class="group text-xl text-black duration-300">
+            Off By <span class="inline-block group-hover:-translate-y-0.5 duration-300">One</span>
+          </.link>
+        </div>
+        <div class="font-medium text-gray-400">
+          by <a href="https://rockwellschrock.com" class="hover:text-gray-600 transition-colors">Rockwell Schrock</a>
+        </div>
       </div>
-      <div class="font-medium text-gray-400">
-        by <a href="https://rockwellschrock.com" class="hover:text-gray-600 transition-colors">Rockwell Schrock</a>
-      </div>
-    </div>
-  </header>
+    </header>
+  <% end %>
 
   <main class="text-gray-800">
     <.flash kind={:info} title="Success!" flash={@flash} />
