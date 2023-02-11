@@ -15,8 +15,8 @@
       class="h-6 w-6 mt-1 md:mt-0 md:h-10 md:w-10 group-hover:-translate-y-1 duration-300"
     />
   </.link>
-
-  <div class="flex-grow">
+  <%!-- This w-0 is a hack to get <pre> overflow-x to work --%>
+  <div class="flex-grow w-0">
     <%= if @post.title do %>
       <div class="text-xl md:text-2xl mb-4 flex">
         <%= if @post.url do %>
