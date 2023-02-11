@@ -3,11 +3,28 @@ defmodule KeypressWeb.PostLive.Show do
 
   alias Keypress.Blog
 
-  def handle_params(%{"id" => id}, _uri, socket) do
+  def handle_params(%{"id" => id}, uri, socket) do
     post = Blog.get_published_post!(id)
 
     title = if post.type in [:long, :link], do: post.title, else: ~s|"#{truncate(post.body, 50)}"|
 
-    {:noreply, assign(socket, post: post, page_title: title)}
+    og_meta =
+      %{
+        "og:title" => title,
+        "og:url" => uri,
+        "og:type" => "article",
+        "og:description" => truncate(post.body, 150),
+        "og:site_name" => "Off By One",
+        "og:image" => Phoenix.VerifiedRoutes.static_url(KeypressWeb.Endpoint, "/images/og-image.jpg"),
+        "article:author" => "Rockwell Schrock",
+        "article:published_time" => og_time(post.published_at),
+        "article:modified_time" => og_time(post.edited_at)
+      }
+      |> Map.reject(fn {_, value} -> value == nil end)
+
+    {:noreply, assign(socket, post: post, page_title: title, og_meta: og_meta)}
   end
+
+  defp og_time(%DateTime{} = datetime), do: datetime |> DateTime.truncate(:second) |> DateTime.to_iso8601()
+  defp og_time(_), do: nil
 end

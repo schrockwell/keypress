@@ -10,6 +10,9 @@
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
+    <%= for {key, value} <- @og_meta do %>
+      <meta property={key} content={value} />
+    <% end %>
   </head>
   <body {Theme.body_attrs(@theme)} id={"theme-#{@theme}"}>
     <%= if Auth.signed_in?(@conn) do %>

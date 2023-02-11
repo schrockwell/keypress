@@ -6,7 +6,8 @@ defmodule KeypressWeb.OnMount do
      assign(socket,
        theme: theme,
        authenticated?: Map.get(session, "authenticated", false),
-       header?: true
+       header?: true,
+       og_meta: %{}
      )}
   end
 
@@ -15,7 +16,8 @@ defmodule KeypressWeb.OnMount do
      assign(socket,
        theme: "tailwind",
        authenticated?: true,
-       header?: false
+       header?: false,
+       og_meta: %{}
      )}
   end
 end
