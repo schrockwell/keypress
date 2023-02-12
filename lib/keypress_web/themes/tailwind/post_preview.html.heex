@@ -1,54 +1,48 @@
 <article
   class={[
-    "flex items-start space-x-4 md:space-x-8 bg-white px-4 md:px-6 py-8 shadow-lg md:rounded-xl mb-8 md:mb-24 mt-4 md:mt-8",
+    "bg-white px-4 md:px-8 py-4 md:py-6 shadow-lg md:rounded-xl mb-8 md:mb-24 mt-4 md:mt-8",
     @class
   ]}
   phx-hook="HighlightHook"
   id={"post-preview-#{@post.id}"}
 >
-  <.link
-    navigate={~p"/#{@post.id || 0}"}
-    class="group text-purple-300 hover:text-purple-700 transition-all duration-300"
-  >
-    <.post_type_icon
-      type={@post.type}
-      class="h-6 w-6 mt-1 md:mt-0 md:h-10 md:w-10 group-hover:-translate-y-1 duration-300"
-    />
-  </.link>
-  <%!-- This w-0 is a hack to get <pre> overflow-x to work --%>
-  <div class="flex-grow w-0">
-    <%= if @post.title do %>
-      <h1 class="text-xl md:text-2xl mb-4 flex">
-        <%= if @post.url do %>
-          <.a href={@post.url}><%= @post.title %></.a>
-        <% else %>
-          <%= @post.title %>
-        <% end %>
-      </h1>
-    <% end %>
-    <%= if @post.body do %>
-      <%= if @post.type == :short do %>
-        <div class="text-xl md:text-2xl prose">
-          <.post_body post={@post} />
-        </div>
-      <% else %>
-        <div class="prose">
-          <.post_body post={@post} />
-        </div>
-      <% end %>
-    <% end %>
+  <h1 class="text-xl md:text-2xl mb-4 flex gap-4 items-start">
+    <.link
+      navigate={~p"/#{@post.id || 0}"}
+      class="group text-purple-300 hover:text-purple-700 transition-all duration-300"
+    >
+      <.post_type_icon
+        type={@post.type}
+        class="h-6 w-6 mt-1 md:mt-0 md:h-10 md:w-10 group-hover:-translate-y-1 duration-300"
+      />
+    </.link>
 
-    <div class="text-gray-400 mt-4 text-sm md:text-base">
-      <.link navigate={~p"/#{@post.id || 0}"} class="transition-colors hover:text-gray-600">
-        <%= date(@post.published_at || DateTime.utc_now()) %>
-      </.link>
-      <%= if @post.edited_at do %>
-        • Edited <%= date(@post.edited_at) %>
-      <% end %>
-      <%= if @editable do %>
-        •
-        <.link navigate={~p"/posts/#{@post.id}/edit"} class="transition-colors hover:text-gray-600">Edit</.link>
+    <div class="mt-1">
+      <%= case @post.type do %>
+        <% :link -> %>
+          <.a href={@post.url}><%= @post.title %></.a>
+        <% :long -> %>
+          <%= @post.title %>
+        <% :short -> %>
+          <Theme.post_body theme={@theme} post={@post} class="text-xl md:text-2xl" />
       <% end %>
     </div>
+  </h1>
+
+  <%= if @post.type == :long do %>
+    <Theme.post_body theme={@theme} post={@post} />
+  <% end %>
+
+  <div class="text-gray-400 mt-4 md:mt-6 text-sm md:text-base">
+    <.link navigate={~p"/#{@post.id || 0}"} class="transition-colors hover:text-gray-600">
+      <%= date(@post.published_at || DateTime.utc_now()) %>
+    </.link>
+    <%= if @post.edited_at do %>
+      • Edited <%= date(@post.edited_at) %>
+    <% end %>
+    <%= if @editable do %>
+      •
+      <.link navigate={~p"/posts/#{@post.id}/edit"} class="transition-colors hover:text-gray-600">Edit</.link>
+    <% end %>
   </div>
 </article>

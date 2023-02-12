@@ -1,1 +1,3 @@
-<%= raw(Earmark.as_html!(@post.body, %Earmark.Options{code_class_prefix: "language-"})) %>
+<div class={["prose", @class]}>
+  <%= raw(Earmark.as_html!(@post.body, %Earmark.Options{code_class_prefix: "language-"})) %>
+</div>

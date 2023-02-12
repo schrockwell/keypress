@@ -22,6 +22,7 @@ module.exports = {
             pre: {
               color: theme("colors.gray.1000"),
               backgroundColor: "#282c34", // background color of atom-one-dark theme in highlight.js
+              borderRadius: "0",
             },
             "pre code::before": {
               paddingLeft: "unset",

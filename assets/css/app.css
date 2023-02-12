@@ -2,4 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* This file is for your main application CSS */
+/* Make code blocks full-bleed */
+#theme-tailwind .prose pre {
+  @apply -mx-4 md:-mx-8 px-0 md:px-4 py-0 md:py-2;
+}

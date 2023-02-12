@@ -30,6 +30,7 @@ defmodule KeypressWeb.Theme do
 
   attr :theme, :string, required: true
   attr :post, Post, required: true
+  attr :class, :any, default: nil
 
   def post_body(%{theme: theme} = assigns) do
     @themes[theme].post_body(assigns)
