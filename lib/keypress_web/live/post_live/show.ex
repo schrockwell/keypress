@@ -15,7 +15,7 @@ defmodule KeypressWeb.PostLive.Show do
         "og:type" => "article",
         "og:description" => truncate(post.body, 150),
         "og:site_name" => "Off By One",
-        "og:image" => Phoenix.VerifiedRoutes.static_url(KeypressWeb.Endpoint, "/images/og-image.jpg"),
+        "og:image" => og_image(post),
         "article:author" => "Rockwell Schrock",
         "article:published_time" => og_time(post.published_at),
         "article:modified_time" => og_time(post.edited_at)

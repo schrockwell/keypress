@@ -1,7 +1,11 @@
 defmodule KeypressWeb.HTML do
   use Phoenix.Component
 
+  alias Phoenix.VerifiedRoutes
+
   alias Keypress.Schemas.Post
+
+  alias KeypressWeb.Endpoint
 
   def my_page_title(nil), do: "Off By One"
   def my_page_title(string), do: "#{string} · Off By One"
@@ -85,4 +89,8 @@ defmodule KeypressWeb.HTML do
     </h2>
     """
   end
+
+  def og_image(%Post{type: :short}), do: VerifiedRoutes.static_url(Endpoint, "/images/og-image-short.webp")
+  def og_image(%Post{type: :link}), do: VerifiedRoutes.static_url(Endpoint, "/images/og-image-link.webp")
+  def og_image(_), do: VerifiedRoutes.static_url(Endpoint, "/images/og-image-long.webp")
 end
