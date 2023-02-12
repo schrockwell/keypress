@@ -29,7 +29,7 @@
     </div>
   </h1>
 
-  <%= if @post.type == :long do %>
+  <%= if @post.type in [:link, :long] do %>
     <Theme.post_body theme={@theme} post={@post} />
   <% end %>
 
