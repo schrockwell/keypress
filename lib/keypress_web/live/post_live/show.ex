@@ -13,7 +13,7 @@ defmodule KeypressWeb.PostLive.Show do
         "og:title" => title,
         "og:url" => uri,
         "og:type" => "article",
-        "og:description" => truncate(post.body, 150),
+        "og:description" => truncate(Blog.post_body_as_text(post), 150),
         "og:site_name" => "Off By One",
         "og:image" => og_image(post),
         "article:author" => "Rockwell Schrock",
