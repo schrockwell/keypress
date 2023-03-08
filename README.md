@@ -10,15 +10,15 @@ Keypress is the LiveView microblog application that powers [posts.schrockwell.co
 - LiveView post editor with previews
   - Drafts
   - Edits
+- RSS
 
-## Not Features (Yet)
+## Planned Features
 
 See [GitHub issues](https://github.com/schrockwell/keypress/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement).
 
-- RSS
 - Pagination
 
-## Not Features (Ever)
+## Unplanned Features
 
 - Multiple authors
 - Tags
