@@ -13,6 +13,7 @@
     <%= for {key, value} <- @og_meta do %>
       <meta property={key} content={value} />
     <% end %>
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href={~p"/rss.xml"} />
   </head>
   <body {Theme.body_attrs(@theme)} id={"theme-#{@theme}"}>
     <%= if Auth.signed_in?(@conn) do %>

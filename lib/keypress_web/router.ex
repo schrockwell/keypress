@@ -15,6 +15,10 @@ defmodule KeypressWeb.Router do
     plug KeypressWeb.RequireAuthenticatedPlug
   end
 
+  pipeline :rss do
+    plug :accepts, ["xml"]
+  end
+
   scope "/", KeypressWeb.Admin do
     pipe_through [:browser, :authenticated]
 
@@ -23,6 +27,12 @@ defmodule KeypressWeb.Router do
       live "/posts/new/:type", PostLive.Edit, :new
       live "/posts/:id/edit", PostLive.Edit, :edit
     end
+  end
+
+  scope "/", KeypressWeb do
+    pipe_through :rss
+
+    get "/rss.xml", FeedController, :rss
   end
 
   scope "/", KeypressWeb do

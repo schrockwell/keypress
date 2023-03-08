@@ -1,5 +1,5 @@
 <div class={["prose", @class]}>
   <%= if @post.body do %>
-    <%= raw(Earmark.as_html!(@post.body, %Earmark.Options{code_class_prefix: "language-"})) %>
+    <%= raw(post_html(@post)) %>
   <% end %>
 </div>

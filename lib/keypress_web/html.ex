@@ -93,4 +93,8 @@ defmodule KeypressWeb.HTML do
   def og_image(%Post{type: :short}), do: VerifiedRoutes.static_url(Endpoint, "/images/og-image-short.webp")
   def og_image(%Post{type: :link}), do: VerifiedRoutes.static_url(Endpoint, "/images/og-image-link.webp")
   def og_image(_), do: VerifiedRoutes.static_url(Endpoint, "/images/og-image-long.webp")
+
+  def post_html(post) do
+    Earmark.as_html!(post.body, %Earmark.Options{code_class_prefix: "language-", compact_output: true})
+  end
 end

@@ -47,7 +47,9 @@ defmodule Keypress.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:earmark, "~> 1.4"}
+      {:earmark, "~> 1.4"},
+      {:xml_builder, "~> 2.1"},
+      {:timex, "~> 3.7.9"}
     ]
   end
 
